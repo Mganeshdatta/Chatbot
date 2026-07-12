@@ -84,11 +84,10 @@
     <script src="https://unpkg.com/supersimpledev/babel.js"></script>
     <script type="text/babel">
       
-      function TextBox({value,setValue}){
+      function TextBox({value,setValue,text,setText}){
         const [inputText,setInputText]=React.useState('');
         function changeInput(e){
           setInputText(e.target.value);
-      
         }
         async function sendMessage(){
           const newValue = [
@@ -100,8 +99,10 @@
             }
           ]
           setValue(newValue);
-          if(inputText.length!==0){
           setInputText('');
+          if(text===1){
+            setText(0);
+          }
           const preresponse = 'Loading'
           setValue([
             ...newValue,
@@ -121,7 +122,6 @@
               key:crypto.randomUUID()
             }
           ]);
-          }
         }
         function useEnter(e){
           if(e.key==='Enter'){
@@ -153,11 +153,6 @@
       function Message(props){
         const msg=props.message;
         const sender = props.sender;
-        if(msg.length===0){
-          return (
-          <div className="no-input-text">Welcome to the chatbot project! Send a message using the textbox below</div>
-        )}
-        else{
         return (
           <div className={sender==='user' ? 'chat-msg-user' : 'chat-msg-bot'}>
           {sender==="bot" 
@@ -176,7 +171,6 @@
           </div>
         )
         }
-      }
 
 
       function ChatMessages({value}){
@@ -205,13 +199,15 @@
 
       function App(){
         const arr =React.useState([]);
+        const [text,setText] = React.useState(1);
         const value = arr[0];
         const setValue = arr[1];
         return (
           <div className="app-container">
-          <ChatMessages value={value}/>
-          <TextBox value={value} setValue={setValue}/>
-          <button className="change-position"></button>
+            {text ===1 && <div>Welcome to the chatbot project! Send a message using the textbox below.</div>}
+            <ChatMessages value={value}/>
+            <TextBox value={value} setValue={setValue} text={text} setText={setText}/>
+            <button className="change-position"></button>
           </div>
         )
       }
