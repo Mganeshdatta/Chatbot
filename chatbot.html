@@ -59,6 +59,7 @@
         padding: 15px 20px;
         margin-bottom: 10px;
         max-width: 300px;
+        word-break: break-word;       
       }
       .chat-msg-container{
         flex-grow: 1;
@@ -163,9 +164,6 @@
           </div>
         )
       }
-
-
-
       function ChatMessages({value}){
         const refContainer = React.useRef(null);
         React.useEffect(()=>{
