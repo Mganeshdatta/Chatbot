@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>React Basics</title>
+    <title>ChatBot</title>
+    <link rel="icon" type="image/jpeg" href="icon.jpg">
     <style>
       *{
         margin: 0px;
@@ -67,6 +68,9 @@
         overflow: scroll;
         scrollbar-width: none;
       }
+      .no-input-text{
+        text-align: center;
+      }
     </style>
   </head>
   <body>
@@ -96,6 +100,7 @@
             }
           ]
           setValue(newValue);
+          if(inputText.length!==0){
           setInputText('');
           const preresponse = 'Loading'
           setValue([
@@ -116,6 +121,7 @@
               key:crypto.randomUUID()
             }
           ]);
+          }
         }
         function useEnter(e){
           if(e.key==='Enter'){
@@ -142,10 +148,16 @@
           </div>
         )
       }
+
+
       function Message(props){
         const msg=props.message;
         const sender = props.sender;
-
+        if(msg.length===0){
+          return (
+          <div className="no-input-text">Welcome to the chatbot project! Send a message using the textbox below</div>
+        )}
+        else{
         return (
           <div className={sender==='user' ? 'chat-msg-user' : 'chat-msg-bot'}>
           {sender==="bot" 
@@ -163,7 +175,10 @@
           }
           </div>
         )
+        }
       }
+
+
       function ChatMessages({value}){
         const refContainer = React.useRef(null);
         React.useEffect(()=>{
@@ -186,6 +201,8 @@
           </div>
       );
       }
+
+
       function App(){
         const arr =React.useState([]);
         const value = arr[0];
